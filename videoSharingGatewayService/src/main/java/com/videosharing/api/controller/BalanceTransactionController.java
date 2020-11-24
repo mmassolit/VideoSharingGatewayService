@@ -20,41 +20,41 @@ public class BalanceTransactionController {
     private final String url = "http://balance-transactions:8085/balance-transaction";
 
     @PostMapping
-    public ResponseEntity<BalanceTransaction> create(@RequestBody BalanceTransactionPayload payload) {
+    public BalanceTransaction create(@RequestBody BalanceTransactionPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<BalanceTransaction> result = restTemplate.postForEntity(url, payload, BalanceTransaction.class);
-        return result;
+        return result.getBody();
     }
 
     @GetMapping
-    public ResponseEntity<List<BalanceTransaction>> index() {
+    public List<BalanceTransaction> index() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<BalanceTransaction>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<BalanceTransaction> show(@PathVariable String id) {
+    public BalanceTransaction show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<BalanceTransaction> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
     
     @DeleteMapping("{id}")
-    public ResponseEntity<BalanceTransaction> delete(@PathVariable String id) {
+    public BalanceTransaction delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<BalanceTransaction> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     } 
 }

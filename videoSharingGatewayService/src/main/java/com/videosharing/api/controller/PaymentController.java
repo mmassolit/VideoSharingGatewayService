@@ -20,41 +20,41 @@ public class PaymentController {
     private final String url = "http://payments:8086/payment";
 
     @PostMapping
-    public ResponseEntity<Payment> create(@RequestBody PaymentPayload payload) {
+    public Payment create(@RequestBody PaymentPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Payment> result = restTemplate.postForEntity(url, payload, Payment.class);
-        return result;
+        return result.getBody();
     }
 
     @GetMapping
-    public ResponseEntity<List<Payment>> index() {
+    public List<Payment> index() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Payment>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Payment> show(@PathVariable String id) {
+    public Payment show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Payment> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
     
     @DeleteMapping("{id}")
-    public ResponseEntity<Payment> delete(@PathVariable String id) {
+    public Payment delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Payment> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     } 
 }

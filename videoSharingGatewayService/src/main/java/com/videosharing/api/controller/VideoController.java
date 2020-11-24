@@ -20,41 +20,41 @@ public class VideoController {
     private final String url = "http://videos:8084/video";
 
     @PostMapping
-    public ResponseEntity<Video> create(@RequestBody VideoPayload payload) {
+    public Video create(@RequestBody VideoPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Video> result = restTemplate.postForEntity(url, payload, Video.class);
-        return result;
+        return result.getBody();
     }
 
     @GetMapping
-    public ResponseEntity<List<Video>> index() {
+    public List<Video> index() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Video>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Video> show(@PathVariable String id) {
+    public Video show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Video> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
     
     @DeleteMapping("{id}")
-    public ResponseEntity<Video> delete(@PathVariable String id) {
+    public Video delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Video> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     } 
 }

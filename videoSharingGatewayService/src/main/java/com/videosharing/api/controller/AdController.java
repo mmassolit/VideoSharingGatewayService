@@ -20,41 +20,41 @@ public class AdController {
     private final String url = "http://ads:8083/ad";
 
     @PostMapping
-    public ResponseEntity<Ad> create(@RequestBody AdPayload payload) {
+    public Ad create(@RequestBody AdPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Ad> result = restTemplate.postForEntity(url, payload, Ad.class);
-        return result;
+        return result.getBody();
     }
 
     @GetMapping
-    public ResponseEntity<List<Ad>> index() {
+    public List<Ad> index() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Ad>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Ad> show(@PathVariable String id) {
+    public Ad show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Ad> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
     
     @DeleteMapping("{id}")
-    public ResponseEntity<Ad> delete(@PathVariable String id) {
+    public Ad delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Ad> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     } 
 }

@@ -20,41 +20,41 @@ public class PlaybackController {
     private final String url = "http://playbacks:8087/playback";
 
     @PostMapping
-    public ResponseEntity<Playback> create(@RequestBody PlaybackPayload payload) {
+    public Playback create(@RequestBody PlaybackPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Playback> result = restTemplate.postForEntity(url, payload, Playback.class);
-        return result;
+        return result.getBody();
     }
 
     @GetMapping
-    public ResponseEntity<List<Playback>> index() {
+    public List<Playback> index() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Playback>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Playback> show(@PathVariable String id) {
+    public Playback show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Playback> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
     
     @DeleteMapping("{id}")
-    public ResponseEntity<Playback> delete(@PathVariable String id) {
+    public Playback delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Playback> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     } 
 }

@@ -20,41 +20,41 @@ public class UserController {
     private final String url = "http://users:8082/user";
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody UserPayload payload) {
+    public User create(@RequestBody UserPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<User> result = restTemplate.postForEntity(url, payload, User.class);
-        return result;
+        return result.getBody();
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> index() {
+    public List<User> index() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<User>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> show(@PathVariable String id) {
+    public User show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<User> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     }
     
     @DeleteMapping("{id}")
-    public ResponseEntity<User> delete(@PathVariable String id) {
+    public User delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<User> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {
                         });
-        return result;
+        return result.getBody();
     } 
 }
