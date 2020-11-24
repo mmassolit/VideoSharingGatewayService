@@ -1,7 +1,6 @@
 package com.videosharing.api.controller;
 
 import com.videosharing.api.dto.PaymentPayload;
-import com.videosharing.model.Payment;
 
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,16 +19,16 @@ public class PaymentController {
     private final String url = "http://payments:8086/payment";
 
     @PostMapping
-    public Payment create(@RequestBody PaymentPayload payload) {
+    public PaymentPayload create(@RequestBody PaymentPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Payment> result = restTemplate.postForEntity(url, payload, Payment.class);
+        ResponseEntity<PaymentPayload> result = restTemplate.postForEntity(url, payload, PaymentPayload.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Payment> index() {
+    public List<PaymentPayload> index() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Payment>> result =
+        ResponseEntity<List<PaymentPayload>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -37,9 +36,9 @@ public class PaymentController {
     }
 
     @GetMapping("{id}")
-    public Payment show(@PathVariable String id) {
+    public PaymentPayload show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Payment> result =
+        ResponseEntity<PaymentPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
@@ -48,9 +47,9 @@ public class PaymentController {
     }
     
     @DeleteMapping("{id}")
-    public Payment delete(@PathVariable String id) {
+    public PaymentPayload delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Payment> result =
+        ResponseEntity<PaymentPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {

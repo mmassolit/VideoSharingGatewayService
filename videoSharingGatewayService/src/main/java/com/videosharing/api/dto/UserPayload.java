@@ -22,7 +22,6 @@ public final class UserPayload {
     @Pattern(regexp = "^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\\d]){1,})(?=(.*[\\W]){1,}).{8,}$",
             message = "Passowrd should contain at least 1 upper case letter, 1 lowwer case letter "
             		+ "and 1 digit and have length at least 8 characters.")
-    
     private String password;
     
     @NotNull(message = "Email field is required.")

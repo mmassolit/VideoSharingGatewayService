@@ -1,7 +1,6 @@
 package com.videosharing.api.controller;
 
 import com.videosharing.api.dto.UserPayload;
-import com.videosharing.model.User;
 
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,16 +19,16 @@ public class UserController {
     private final String url = "http://users:8082/user";
 
     @PostMapping
-    public User create(@RequestBody UserPayload payload) {
+    public UserPayload create(@RequestBody UserPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> result = restTemplate.postForEntity(url, payload, User.class);
+        ResponseEntity<UserPayload> result = restTemplate.postForEntity(url, payload, UserPayload.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<User> index() {
+    public List<UserPayload> index() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<User>> result =
+        ResponseEntity<List<UserPayload>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -37,9 +36,9 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public User show(@PathVariable String id) {
+    public UserPayload show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> result =
+        ResponseEntity<UserPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
@@ -48,9 +47,9 @@ public class UserController {
     }
     
     @DeleteMapping("{id}")
-    public User delete(@PathVariable String id) {
+    public UserPayload delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> result =
+        ResponseEntity<UserPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {

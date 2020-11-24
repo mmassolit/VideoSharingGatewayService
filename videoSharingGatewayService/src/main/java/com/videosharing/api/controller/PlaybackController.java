@@ -1,7 +1,6 @@
 package com.videosharing.api.controller;
 
 import com.videosharing.api.dto.PlaybackPayload;
-import com.videosharing.model.Playback;
 
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,16 +19,16 @@ public class PlaybackController {
     private final String url = "http://playbacks:8087/playback";
 
     @PostMapping
-    public Playback create(@RequestBody PlaybackPayload payload) {
+    public PlaybackPayload create(@RequestBody PlaybackPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Playback> result = restTemplate.postForEntity(url, payload, Playback.class);
+        ResponseEntity<PlaybackPayload> result = restTemplate.postForEntity(url, payload, PlaybackPayload.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Playback> index() {
+    public List<PlaybackPayload> index() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Playback>> result =
+        ResponseEntity<List<PlaybackPayload>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -37,9 +36,9 @@ public class PlaybackController {
     }
 
     @GetMapping("{id}")
-    public Playback show(@PathVariable String id) {
+    public PlaybackPayload show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Playback> result =
+        ResponseEntity<PlaybackPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
@@ -48,9 +47,9 @@ public class PlaybackController {
     }
     
     @DeleteMapping("{id}")
-    public Playback delete(@PathVariable String id) {
+    public PlaybackPayload delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Playback> result =
+        ResponseEntity<PlaybackPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {

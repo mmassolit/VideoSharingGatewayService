@@ -1,7 +1,6 @@
 package com.videosharing.api.controller;
 
 import com.videosharing.api.dto.AdPayload;
-import com.videosharing.model.Ad;
 
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,16 +19,16 @@ public class AdController {
     private final String url = "http://ads:8083/ad";
 
     @PostMapping
-    public Ad create(@RequestBody AdPayload payload) {
+    public AdPayload create(@RequestBody AdPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Ad> result = restTemplate.postForEntity(url, payload, Ad.class);
+        ResponseEntity<AdPayload> result = restTemplate.postForEntity(url, payload, AdPayload.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Ad> index() {
+    public List<AdPayload> index() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Ad>> result =
+        ResponseEntity<List<AdPayload>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -37,9 +36,9 @@ public class AdController {
     }
 
     @GetMapping("{id}")
-    public Ad show(@PathVariable String id) {
+    public AdPayload show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Ad> result =
+        ResponseEntity<AdPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
@@ -48,9 +47,9 @@ public class AdController {
     }
     
     @DeleteMapping("{id}")
-    public Ad delete(@PathVariable String id) {
+    public AdPayload delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Ad> result =
+        ResponseEntity<AdPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {

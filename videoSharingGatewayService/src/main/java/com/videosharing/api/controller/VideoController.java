@@ -1,7 +1,6 @@
 package com.videosharing.api.controller;
 
 import com.videosharing.api.dto.VideoPayload;
-import com.videosharing.model.Video;
 
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,16 +19,16 @@ public class VideoController {
     private final String url = "http://videos:8084/video";
 
     @PostMapping
-    public Video create(@RequestBody VideoPayload payload) {
+    public VideoPayload create(@RequestBody VideoPayload payload) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Video> result = restTemplate.postForEntity(url, payload, Video.class);
+        ResponseEntity<VideoPayload> result = restTemplate.postForEntity(url, payload, VideoPayload.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Video> index() {
+    public List<VideoPayload> index() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Video>> result =
+        ResponseEntity<List<VideoPayload>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -37,9 +36,9 @@ public class VideoController {
     }
 
     @GetMapping("{id}")
-    public Video show(@PathVariable String id) {
+    public VideoPayload show(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Video> result =
+        ResponseEntity<VideoPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
@@ -48,9 +47,9 @@ public class VideoController {
     }
     
     @DeleteMapping("{id}")
-    public Video delete(@PathVariable String id) {
+    public VideoPayload delete(@PathVariable String id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Video> result =
+        ResponseEntity<VideoPayload> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.DELETE, null,
                         new ParameterizedTypeReference<>() {
